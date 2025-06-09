@@ -4,17 +4,17 @@ import Search from './components/Search';
 
 const API_BASE_URL = 'https://api.themoviedb.org/3';
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
 const API_OPTIONS = {
   method: 'GET',
   headers: {
     accept: 'application/json',
-    Authorization: `Bearer ${API_KEY}`,
   },
 };
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("I'm Batman");
-  const [errroMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,23 +24,25 @@ const App = () => {
 
     try {
       const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}`;
-
       const response = await fetch(endpoint, API_OPTIONS);
+
       if (!response.ok) {
         throw new Error('Failed to fetch movies');
       }
+
       const data = await response.json();
 
-      if (data.Response === 'False') {
-        setErrorMessage(data.error || 'Failed to fetch movies');
+      if (!data.results || data.results.length === 0) {
+        setErrorMessage('No movies found.');
         setMovieList([]);
         return;
       }
-      setMovieList(data.results || []);
+
+      setMovieList(data.results);
     } catch (error) {
       console.log(`Error fetching movies: ${error}`);
       setErrorMessage('Error fetching movies. Please try again later.');
-    } finally{
+    } finally {
       setIsLoading(false);
     }
   };
@@ -67,13 +69,15 @@ const App = () => {
           <h2 className='mt-[40px]'>All Movies</h2>
 
           {isLoading ? (
-            <Spinner/>
-          ) : errroMessage ? (
-            <p className='text-red-500'>{errroMessage}</p>
+            <Spinner />
+          ) : errorMessage ? (
+            <p className='text-red-500'>{errorMessage}</p>
           ) : (
             <ul>
               {movieList.map((movie) => (
-                <p key={movie.id} className='text-white'>{movie.title}</p>
+                <p key={movie.id} className='text-white'>
+                  {movie.title}
+                </p>
               ))}
             </ul>
           )}
