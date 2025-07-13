@@ -10,7 +10,7 @@ const MovieCards = ({
         src={
           poster_path
             ? `https://image.tmdb.org/t/p/w500/${poster_path}`
-            : '/no-movie.png'
+            : 'public/assets/no-movie.png'
         }
         alt={title}
       />
@@ -20,7 +20,7 @@ const MovieCards = ({
 
         <div className='content'>
           <div className='rating'>
-            <img src='/Rating.png' alt='Star Icon' />
+            <img src='public/assets/Rating.png' alt='Star Icon' />
             <p>{vote_average ? vote_average.toFixed(1) : 'N/A'}</p>
           </div>
 
