@@ -4,6 +4,9 @@
 
 @import "tailwindcss";
 
+*{
+  font-family: outfit, sans-serif;
+}
 @theme {
   --color-primary: #030014;
 
