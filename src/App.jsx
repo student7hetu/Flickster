@@ -110,16 +110,16 @@ const App = () => {
                 setPage(nextPage);
                 fetchMovies(debouncedSearchTerm, nextPage, true);
               }}
-              className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition'
+              className='px-4 py-2 bg-indigo-800 text-white rounded hover:bg-blue-600 transition'
             >
               Load More
             </button>
           </div>
         )}
-        <footer className='mt-16 text-2xl text-white text-center'>
+        <footer className='mt-16 text-2xl text-white text-center border-t pt-4'>
           <p>
             Made with ❤️ by{' '}
-            <a
+            <a className='text-gradient'
               href='https://github.com/yourusername/flickster'
               target='_blank'
               rel='noopener noreferrer'
